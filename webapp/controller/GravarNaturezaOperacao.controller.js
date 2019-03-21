@@ -161,7 +161,10 @@ sap.ui.define([
 		},
 		
 		_checarCampos: function(oView){
-			if(oView.byId("codigo").getValue() === "" || oView.byId("descricao").getValue() === ""){
+			if(oView.byId("codigo").getValue() === "" || oView.byId("descricao").getValue() === ""
+			|| oView.byId("notafiscal").getValue() === "" || oView.byId("cfop").getValue() === ""
+			|| oView.byId("cstcofins").getSelectedItem() === null || oView.byId("cstpis").getSelectedItem() === null
+			|| oView.byId("csticms").getSelectedItem() === null || oView.byId("cstipi").getSelectedItem() === null){
 				return true;
 			} else{
 				return false; 

@@ -35,7 +35,7 @@ xmlns:f="sap.ui.layout.form">
 								<Label text="Descrição" labelFor="descricao"/>
 								<Input id="descricao" value="{model>/Descricao}" required="true"/>
 								
-								<Label text="Nota Fiscal" labelFor="notafiscal"/>
+								<Label text="Texto Nota Fiscal" labelFor="notafiscal"/>
 								<Input id="notafiscal" value="{model>/TextoNotaFiscal}" required="true"/>
 								
 								<Label text="CFOP" labelFor="cfop"/>
@@ -45,12 +45,13 @@ xmlns:f="sap.ui.layout.form">
 									showValueHelp="true"
 									valueHelpRequest="handleSearchCfop"
 									suggestionItems="{path: '/Cfops'}"
+									required="true"
 									id="cfop"> 
 									<core:ListItem key="{Codigo}" text="{Descricao}"/>
 								</Input>
 								
 								<core:Title text="PIS/COFINS"/>
-								<Label text="COFINS" labelFor="cstcofins"/>
+								<Label text="COFINS" labelFor="cstcofins" required="true"/>
 								<ComboBox selectedKey="{model>/CstCofins}"
 									items="{path: '/CstCofinss'}"
 									id="cstcofins"> 
@@ -64,9 +65,9 @@ xmlns:f="sap.ui.layout.form">
 			                            formatOptions:{
 			                                decimals: 2,
 			                                decimalSeparator: ','
-			                            }}" required="true"/>
+			                            }}"/>
 									
-								<Label text="PIS" labelFor="cstpis"/>
+								<Label text="PIS" labelFor="cstpis" required="true"/>
 								<ComboBox selectedKey="{model>/CstPis}"
 									items="{path: '/CstPiss'}"
 									id="cstpis"> 
@@ -80,10 +81,10 @@ xmlns:f="sap.ui.layout.form">
 			                            formatOptions:{
 			                                decimals: 2,
 			                                decimalSeparator: ','
-			                            }}" required="true"/>
+			                            }}"/>
 								
 								<core:Title text="ICMS"/>
-								<Label text="ICMS" labelFor="csticms"/>
+								<Label text="ICMS" labelFor="csticms" required="true"/>
 								<ComboBox selectedKey="{model>/CstIcms}"
 									items="{path: '/CstIcmss'}"
 									id="csticms"> 
@@ -98,7 +99,7 @@ xmlns:f="sap.ui.layout.form">
 			                            formatOptions:{
 			                                decimals: 2,
 			                                decimalSeparator: ','
-			                            }}" required="true"/>
+			                            }}"/>
 								
 								<Label text="Diferimento - ICMS" labelFor="diferimento"/>
 								<Input id="diferimento" 
@@ -107,7 +108,7 @@ xmlns:f="sap.ui.layout.form">
 			                            formatOptions:{
 			                                decimals: 2,
 			                                decimalSeparator: ','
-			                            }}" required="true"/>
+			                            }}"/>
 								
 								<Label text="Redução - Base de cálculo" labelFor="reducaobc"/>
 								<Input id="reducaobc" 
@@ -116,10 +117,10 @@ xmlns:f="sap.ui.layout.form">
 			                            formatOptions:{
 			                                decimals: 2,
 			                                decimalSeparator: ','
-			                            }}" required="true"/>
+			                            }}"/>
 								
 								<core:Title text="IPI"/>
-								<Label text="IPI" labelFor="cstipi"/>
+								<Label text="IPI" labelFor="cstipi" required="true"/>
 								<ComboBox selectedKey="{model>/CstIpi}"
 									items="{path: '/CstIpis'}"
 									id="cstipi"> 
@@ -134,9 +135,9 @@ xmlns:f="sap.ui.layout.form">
 			                            formatOptions:{
 			                                decimals: 2,
 			                                decimalSeparator: ','
-			                            }}" required="true"/>
+			                            }}"/>
 								
-								<core:Title text="Observações"/>
+								<core:Title text="Ações"/>
 								<Label text="Gera duplicata" labelFor="geraduplicata"/>
 								<CheckBox selected="{model>/GeraDuplicata}"/>
 								
