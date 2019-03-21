@@ -20,6 +20,14 @@
         "version": "1.52.13"
       },
       "description": "SAPUI5 Test Resources"
+    },
+    {
+      "path": "/siagro",
+      "target": {
+        "type": "destination",
+        "name": "siagro"
+      },
+      "description": "siagro odata service"
     }
   ],
   "sendWelcomeFileRedirect": true

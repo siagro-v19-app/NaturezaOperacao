@@ -1,0 +1,120 @@
+<mvc:View xmlns:core="sap.ui.core"
+xmlns:mvc="sap.ui.core.mvc"
+xmlns="sap.m"
+controllerName="br.com.idxtecNaturezaOperacao.controller.GravarNaturezaOperacao"
+xmlns:html="http://www.w3.org/1999/xhtml"
+xmlns:f="sap.ui.layout.form">
+	<App>
+		<pages>
+			<Page showNavButton="true"
+				navButtonPress="onVoltar">
+				<content>
+					<VBox class="sapUiSmallMargin">	
+						<f:SimpleForm id="SimpleFormChange480_Trial"
+						editable="true"
+						layout="ResponsiveGridLayout"
+						title="{view>/titulo}"
+						labelSpanXL="4"
+						labelSpanL="4"
+						labelSpanM="4"
+						labelSpanS="12"
+						adjustLabelSpan="false"
+						emptySpanXL="0"
+						emptySpanL="0"
+						emptySpanM="0"
+						emptySpanS="0"
+						columnsXL="3"
+						columnsL="2"
+						columnsM="2"
+						singleContainerFullSize="false">
+							<f:content>
+								<core:Title text="Dados cadastrais"/>
+								<Label text="Código" labelFor="codigo"/>
+								<Input id="codigo" value="{model>/Codigo}" required="true" editable="{view>/codigoEdit}"/>
+						
+								<Label text="Descrição" labelFor="descricao"/>
+								<Input id="descricao" value="{model>/Descricao}" required="true"/>
+								
+								<Label text="Nota Fiscal" labelFor="notafiscal"/>
+								<Input id="notafiscal" value="{model>/TextoNotaFiscal}" required="true"/>
+								
+								<Label text="CFOP" labelFor="cfop"/>
+								<Input selectedKey="{model>/Cfop}"
+									textFormatMode="KeyValue"
+									showSuggestion="true"
+									showValueHelp="true"
+									valueHelpRequest="handleSearchCfop"
+									suggestionItems="{path: '/Cfops'}"
+									id="cfop"> 
+									<core:ListItem key="{Codigo}" text="{Descricao}"/>
+								</Input>
+								
+								<core:Title text="PIS/COFINS"/>
+								<Label text="COFINS" labelFor="cstcofins"/>
+								<ComboBox selectedKey="{model>/CstCofins}"
+									items="{path: '/CstCofinss'}"
+									id="cstcofins"> 
+									<core:ListItem key="{Codigo}" text="{Descricao}"/>
+								</ComboBox>
+								
+								<Label text="Alíquota - COFINS" labelFor="aliquotacofins"/>
+								<Input id="aliquotacofins" value="{model>/AliquotaCofins}" required="true"/>
+								
+								<Label text="PIS" labelFor="cstpis"/>
+								<ComboBox selectedKey="{model>/CstPis}"
+									items="{path: '/CstPiss'}"
+									id="cstpis"> 
+									<core:ListItem key="{Codigo}" text="{Descricao}"/>
+								</ComboBox>
+								
+								<Label text="Alíquota - PIS" labelFor="aliquotapis"/>
+								<Input id="aliquotapis" value="{model>/AliquotaPis}" required="true"/>
+								
+								<core:Title text="ICMS"/>
+								<Label text="ICMS" labelFor="csticms"/>
+								<ComboBox selectedKey="{model>/CstIcms}"
+									items="{path: '/CstIcmss'}"
+									id="csticms"> 
+									<core:ListItem key="{Codigo}" text="{Descricao}"/>
+								</ComboBox>
+								
+								<Label text="Alíquota - ICMS" labelFor="aliquotaicms"/>
+								<Input id="aliquotaicms" value="{model>/AliquotaIcms}" required="true"/>
+								
+								<Label text="Diferimento - ICMS" labelFor="diferimento"/>
+								<Input id="diferimento" value="{model>/PercentualDiferimentoIcms}" required="true"/>
+								
+								<Label text="Redução - Base de cálculo" labelFor="reducaobc"/>
+								<Input id="reducaobc" value="{model>/PercentualReducaoBC}" required="true"/>
+								
+								<core:Title text="IPI"/>
+								<Label text="IPI" labelFor="cstipi"/>
+								<ComboBox selectedKey="{model>/CstIpi}"
+									items="{path: '/CstIpis'}"
+									id="cstipi"> 
+									<core:ListItem key="{Codigo}" text="{Descricao}"/>
+								</ComboBox>
+								
+								<Label text="Alíquota - IPI" labelFor="aliquotaipi"/>
+								<Input id="aliquotaipi" value="{model>/AliquotaIpi}" required="true"/>
+								
+								<core:Title text="Observações"/>
+								<Label text="Gera duplicata" labelFor="geraduplicata"/>
+								<CheckBox selected="{model>/GeraDuplicata}"/>
+								
+								<Label text="Movimenta estoque" labelFor="movestoque"/>
+								<CheckBox selected="{model>/MovimentaEstoque}"/>
+							</f:content>
+						</f:SimpleForm>
+					</VBox>
+				</content>
+				<footer>
+					<Toolbar>
+						<ToolbarSpacer/>
+						<Button id="salvar" text="Salvar" press="onSalvar" class="sapUiSmallMarginEnd"/>
+					</Toolbar>
+				</footer>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

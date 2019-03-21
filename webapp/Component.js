@@ -22,6 +22,22 @@ sap.ui.define([
 
 			// set the device model
 			this.setModel(models.createDeviceModel(), "device");
+			this.setModel(models.createViewModel(), "view");
+			
+			this.getRouter().initialize();
+			
+			jQuery.sap.registerModulePath("idxtec.lib.fragment", "/resources/idxtec/lib/fragment");
+		},
+		
+		getContentDensityClass: function(){
+			if(!this._sContentDensityClass){
+				if(!sap.ui.Device.support.touch){
+					this._sContentDensityClass = "sapUiSizeCompact";
+				} else {
+					this._sContentDensityClass = "sapUiSizeCozy";
+				}
+			}
+			return this._sContentDensityClass;
 		}
 	});
 });
