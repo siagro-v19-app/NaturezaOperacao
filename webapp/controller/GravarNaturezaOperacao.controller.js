@@ -48,15 +48,15 @@ sap.ui.define([
 					"TextoNotaFiscal": "",
 					"Cfop": "",
 					"CstCofins": "",
-					"AliquotaCofins": "",
+					"AliquotaCofins": 0.00,
 					"CstPis": "",
-					"AliquotaPis": "",
+					"AliquotaPis": 0.00,
 					"CstIcms": "",
-					"AliquotaIcms": "",
-					"PercentualDiferimentoIcms": "",
-					"PercentualReducaoBC": "",
+					"AliquotaIcms": 0.00,
+					"PercentualDiferimentoIcms": 0.00,
+					"PercentualReducaoBC": 0.00,
 					"CstIpi": "",
-					"AliquotaIpi": "",
+					"AliquotaIpi": 0.00,
 					"GeraDuplicata": false,
 					"MovimentaEstoque": false
 				};
@@ -112,51 +112,23 @@ sap.ui.define([
 			}
 		},
 		
+		_getDados: function() {
+			var oJSONModel = this.getOwnerComponent().getModel("model");
+			var oDados = oJSONModel.getData();
+			oDados.CfopDetails = { __metadata: { uri: "/Cfops('" + oDados.Cfop + "')" } };
+			oDados.CstCofinsDetails = { __metadata: { uri: "/CstCofinss('" + oDados.CstCofins + "')" } };
+			oDados.CstIcmsDetails = { __metadata: { uri: "/CstIcmss('" + oDados.CstIcms + "')" } };
+			oDados.CstIpiDetails = { __metadata: { uri: "/CstIpis('" + oDados.CstIpi + "')" } };
+			oDados.CstPisDetails = { __metadata: { uri: "/CstPiss('" + oDados.CstPis + "')" } };
+			
+			return oDados;
+		},
+		
 		_createNatOperacao: function() {
 			var oModel = this.getOwnerComponent().getModel();
-			var oJSONModel = this.getOwnerComponent().getModel("model");
 			var that = this;
 			
-			var oDados = oJSONModel.getData();
-			
-			oDados.AliquotaCofins = parseFloat(oDados.AliquotaCofins, 0);
-			oDados.AliquotaIcms = parseFloat(oDados.AliquotaIcms, 0);
-			oDados.AliquotaIpi = parseFloat(oDados.AliquotaIpi, 0);
-			oDados.AliquotaPis = parseFloat(oDados.AliquotaPis, 0);
-			oDados.PercentualDiferimentoIcms = parseFloat(oDados.PercentualDiferimentoIcms, 0);
-			oDados.PercentualReducaoBC = parseFloat(oDados.PercentualReducaoBC, 0);
-			
-			oDados.CfopDetails = {
-				__metadata: {
-					uri: "/Cfops('" + oDados.Cfop + "')"
-				}
-			};
-			
-			oDados.CstConfinsDetails = {
-				__metadata: {
-					uri: "/CstCofinss('" + oDados.CstCofins + "')"
-				}
-			};
-			
-			oDados.CstIcmsDetails = {
-				__metadata: {
-					uri: "/CstIcmss('" + oDados.CstIcms + "')"
-				}
-			};
-			
-			oDados.CstIpiDetails = {
-				__metadata: {
-					uri: "/CstIpis('" + oDados.CstIpi + "')"
-				}
-			};
-			
-			oDados.CstPisDetails = {
-				__metadata: {
-					uri: "/CstPiss('" + oDados.CstPis + "')"
-				}
-			};
-			debugger;
-			oModel.create("/NaturezaOperacaos", oDados, {
+			oModel.create("/NaturezaOperacaos", this._getDados(), {
 				success: function() {
 					MessageBox.success("Natureza de operação inserida com sucesso!", {
 						onClose: function(){
@@ -172,49 +144,9 @@ sap.ui.define([
 		
 		_updateNatOperacao: function() {
 			var oModel = this.getOwnerComponent().getModel();
-			var oJSONModel = this.getOwnerComponent().getModel("model");
 			var that = this;
-			
-			var oDados = oJSONModel.getData();
-			
-			oDados.AliquotaCofins = parseFloat(oDados.AliquotaCofins, 0);
-			oDados.AliquotaIcms = parseFloat(oDados.AliquotaIcms, 0);
-			oDados.AliquotaIpi = parseFloat(oDados.AliquotaIpi, 0);
-			oDados.AliquotaPis = parseFloat(oDados.AliquotaPis, 0);
-			oDados.PercentualDiferimentoIcms = parseFloat(oDados.PercentualDiferimentoIcms, 0);
-			oDados.PercentualReducaoBC = parseFloat(oDados.PercentualReducaoBC, 0);
-			
-			oDados.CfopDetails = {
-				__metadata: {
-					uri: "/Cfops('" + oDados.Cfop + "')"
-				}
-			};
-			
-			oDados.CstConfinsDetails = {
-				__metadata: {
-					uri: "/CstCofinss('" + oDados.CstCofins + "')"
-				}
-			};
-			
-			oDados.CstIcmsDetails = {
-				__metadata: {
-					uri: "/CstIcmss('" + oDados.CstIcms + "')"
-				}
-			};
-			
-			oDados.CstIpiDetails = {
-				__metadata: {
-					uri: "/CstIpis('" + oDados.CstIpi + "')"
-				}
-			};
-			
-			oDados.CstPisDetails = {
-				__metadata: {
-					uri: "/CstPiss('" + oDados.CstPis + "')"
-				}
-			};
-			
-			oModel.update(this._sPath, oDados, {
+		
+			oModel.update(this._sPath, this._getDados(), {
 					success: function() {
 					MessageBox.success("Natureza de operação alterada com sucesso!", {
 						onClose: function(){

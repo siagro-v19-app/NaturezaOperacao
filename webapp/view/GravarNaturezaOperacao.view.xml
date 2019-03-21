@@ -58,8 +58,14 @@ xmlns:f="sap.ui.layout.form">
 								</ComboBox>
 								
 								<Label text="Alíquota - COFINS" labelFor="aliquotacofins"/>
-								<Input id="aliquotacofins" value="{model>/AliquotaCofins}" required="true"/>
-								
+								<Input id="aliquotacofins" 
+									value="{path: 'model>/AliquotaCofins', 
+										type: 'sap.ui.model.odata.type.Single',
+			                            formatOptions:{
+			                                decimals: 2,
+			                                decimalSeparator: ','
+			                            }}" required="true"/>
+									
 								<Label text="PIS" labelFor="cstpis"/>
 								<ComboBox selectedKey="{model>/CstPis}"
 									items="{path: '/CstPiss'}"
@@ -68,7 +74,13 @@ xmlns:f="sap.ui.layout.form">
 								</ComboBox>
 								
 								<Label text="Alíquota - PIS" labelFor="aliquotapis"/>
-								<Input id="aliquotapis" value="{model>/AliquotaPis}" required="true"/>
+								<Input id="aliquotapis" 
+									value="{path: 'model>/AliquotaPis', 
+										type: 'sap.ui.model.odata.type.Single',
+			                            formatOptions:{
+			                                decimals: 2,
+			                                decimalSeparator: ','
+			                            }}" required="true"/>
 								
 								<core:Title text="ICMS"/>
 								<Label text="ICMS" labelFor="csticms"/>
@@ -79,13 +91,32 @@ xmlns:f="sap.ui.layout.form">
 								</ComboBox>
 								
 								<Label text="Alíquota - ICMS" labelFor="aliquotaicms"/>
-								<Input id="aliquotaicms" value="{model>/AliquotaIcms}" required="true"/>
+								<Input id="aliquotaicms" 
+									value="{
+									path: 'model>/AliquotaIcms',
+									type: 'sap.ui.model.odata.type.Single',
+			                            formatOptions:{
+			                                decimals: 2,
+			                                decimalSeparator: ','
+			                            }}" required="true"/>
 								
 								<Label text="Diferimento - ICMS" labelFor="diferimento"/>
-								<Input id="diferimento" value="{model>/PercentualDiferimentoIcms}" required="true"/>
+								<Input id="diferimento" 
+									value="{path: 'model>/PercentualDiferimentoIcms',
+										type: 'sap.ui.model.odata.type.Single',
+			                            formatOptions:{
+			                                decimals: 2,
+			                                decimalSeparator: ','
+			                            }}" required="true"/>
 								
 								<Label text="Redução - Base de cálculo" labelFor="reducaobc"/>
-								<Input id="reducaobc" value="{model>/PercentualReducaoBC}" required="true"/>
+								<Input id="reducaobc" 
+									value="{path: 'model>/PercentualReducaoBC',
+									type: 'sap.ui.model.odata.type.Single',
+			                            formatOptions:{
+			                                decimals: 2,
+			                                decimalSeparator: ','
+			                            }}" required="true"/>
 								
 								<core:Title text="IPI"/>
 								<Label text="IPI" labelFor="cstipi"/>
@@ -96,7 +127,14 @@ xmlns:f="sap.ui.layout.form">
 								</ComboBox>
 								
 								<Label text="Alíquota - IPI" labelFor="aliquotaipi"/>
-								<Input id="aliquotaipi" value="{model>/AliquotaIpi}" required="true"/>
+								<Input id="aliquotaipi" 
+									value="{
+									path: 'model>/AliquotaIpi',
+									type: 'sap.ui.model.odata.type.Single',
+			                            formatOptions:{
+			                                decimals: 2,
+			                                decimalSeparator: ','
+			                            }}" required="true"/>
 								
 								<core:Title text="Observações"/>
 								<Label text="Gera duplicata" labelFor="geraduplicata"/>
