@@ -1,10 +1,16 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/model/json/JSONModel",
-	"idxtec/lib/fragment/CfopHelpDialog",
 	"sap/m/MessageBox",
-	"sap/ui/core/routing/History"
-], function(Controller, JSONModel, CfopHelpDialog, MessageBox, History) {
+	"sap/ui/core/routing/History",
+	"br/com/idxtecNaturezaOperacao/helpers/CfopHelpDialog",
+	"br/com/idxtecNaturezaOperacao/helpers/CstCofinsHelpDialog",
+	"br/com/idxtecNaturezaOperacao/helpers/CstPisHelpDialog",
+	"br/com/idxtecNaturezaOperacao/helpers/CstIcmsHelpDialog",
+	"br/com/idxtecNaturezaOperacao/helpers/CstIpiHelpDialog",
+	"br/com/idxtecNaturezaOperacao/services/Session"
+], function(Controller, JSONModel, MessageBox, History, CfopHelpDialog, CstCofinsHelpDialog, CstPisHelpDialog,
+	CstIcmsHelpDialog, CstIpiHelpDialog, Session) {
 	"use strict";
 
 	return Controller.extend("br.com.idxtecNaturezaOperacao.controller.GravarNaturezaOperacao", {
@@ -21,9 +27,49 @@ sap.ui.define([
 			this.getOwnerComponent().setModel(oJSONModel,"model");
 		},
 		
+		cfopReceived: function() {
+			this.getView().byId("cfop").setSelectedKey(this.getModel("model").getProperty("/Cfop"));
+		},
+		
+		cstCofinsReceived: function() {
+			this.getView().byId("cstcofins").setSelectedKey(this.getModel("model").getProperty("/CstCofins"));
+		},
+		
+		cstPisReceived: function() {
+			this.getView().byId("cstpis").setSelectedKey(this.getModel("model").getProperty("/CstPis"));
+		},
+		
+		cstIcmsReceived: function() {
+			this.getView().byId("csticms").setSelectedKey(this.getModel("model").getProperty("/CstIcms"));
+		},
+		
+		cstIpiReceived: function() {
+			this.getView().byId("cstipi").setSelectedKey(this.getModel("model").getProperty("/CstIpi"));
+		},
+		
 		handleSearchCfop: function(oEvent){
-			var oHelp = new CfopHelpDialog(this.getView(), "cfop");
-			oHelp.getDialog().open();
+			var sInputId = oEvent.getParameter("id");
+			CfopHelpDialog.handleValueHelp(this.getView(), sInputId, this);
+		},
+		
+		handleSearchCstCofins: function(oEvent){
+			var sInputId = oEvent.getParameter("id");
+			CstCofinsHelpDialog.handleValueHelp(this.getView(), sInputId, this);
+		},
+		
+		handleSearchCstPis: function(oEvent){
+			var sInputId = oEvent.getParameter("id");
+			CstPisHelpDialog.handleValueHelp(this.getView(), sInputId, this);
+		},
+		
+		handleSearchCstIcms: function(oEvent){
+			var sInputId = oEvent.getParameter("id");
+			CstIcmsHelpDialog.handleValueHelp(this.getView(), sInputId, this);
+		},
+		
+		handleSearchCstIpi: function(oEvent){
+			var sInputId = oEvent.getParameter("id");
+			CstIpiHelpDialog.handleValueHelp(this.getView(), sInputId, this);
 		},
 		
 		_routerMatch: function(){
@@ -34,6 +80,12 @@ sap.ui.define([
 			
 			this._operacao = oParam.operacao;
 			this._sPath = oParam.sPath;
+			
+			this.getView().byId("cfop").setValue(null);
+			this.getView().byId("cstcofins").setValue(null);
+			this.getView().byId("csticms").setValue(null);
+			this.getView().byId("cstipi").setValue(null);
+			this.getView().byId("cstpis").setValue(null);
 			
 			if (this._operacao === "incluir"){
 				
@@ -58,16 +110,14 @@ sap.ui.define([
 					"CstIpi": "",
 					"AliquotaIpi": 0.00,
 					"GeraDuplicata": false,
-					"MovimentaEstoque": false
+					"MovimentaEstoque": false,
+					"Empresa" : Session.get("EMPRESA_ID"),
+					"Usuario": Session.get("USUARIO_ID"),
+					"EmpresaDetails": { __metadata: { uri: "/Empresas(" + Session.get("EMPRESA_ID") + ")"}},
+					"UsuarioDetails": { __metadata: { uri: "/Usuarios(" + Session.get("USUARIO_ID") + ")"}}
 				};
 				
 				oJSONModel.setData(oNovaNatureza);
-				
-				this.getView().byId("cfop").setSelectedKey("");
-				this.getView().byId("cstcofins").setSelectedKey("");
-				this.getView().byId("csticms").setSelectedKey("");
-				this.getView().byId("cstipi").setSelectedKey("");
-				this.getView().byId("cstpis").setSelectedKey("");
 				
 			} else if (this._operacao === "editar"){
 				
@@ -79,9 +129,6 @@ sap.ui.define([
 				oModel.read(oParam.sPath,{
 					success: function(oData) {
 						oJSONModel.setData(oData);
-					},
-					error: function(oError) {
-						MessageBox.error(oError.responseText);
 					}
 				});
 			}
@@ -89,7 +136,7 @@ sap.ui.define([
 		
 		onSalvar: function(){
 			if (this._checarCampos(this.getView())) {
-				MessageBox.information("Preencha todos os campos obrigatórios!");
+				MessageBox.warning("Preencha todos os campos obrigatórios!");
 				return;
 			}
 			
@@ -115,6 +162,7 @@ sap.ui.define([
 		_getDados: function() {
 			var oJSONModel = this.getOwnerComponent().getModel("model");
 			var oDados = oJSONModel.getData();
+			
 			oDados.CfopDetails = { __metadata: { uri: "/Cfops('" + oDados.Cfop + "')" } };
 			oDados.CstCofinsDetails = { __metadata: { uri: "/CstCofinss('" + oDados.CstCofins + "')" } };
 			oDados.CstIcmsDetails = { __metadata: { uri: "/CstIcmss('" + oDados.CstIcms + "')" } };
@@ -135,9 +183,6 @@ sap.ui.define([
 							that._goBack(); 
 						}
 					});
-				},
-				error: function(oError) {
-					MessageBox.error(oError.responseText);
 				}
 			});
 		},
@@ -153,9 +198,6 @@ sap.ui.define([
 							that._goBack();
 						}
 					});
-				},
-				error: function(oError) {
-					MessageBox.error(oError.responseText);
 				}
 			});
 		},
@@ -173,7 +215,10 @@ sap.ui.define([
 		
 		onVoltar: function(){
 			this._goBack();
+		},
+		
+		getModel : function(sModel) {
+			return this.getOwnerComponent().getModel(sModel);	
 		}
 	});
-
 });

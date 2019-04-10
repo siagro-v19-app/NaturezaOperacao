@@ -6,151 +6,197 @@ xmlns:html="http://www.w3.org/1999/xhtml"
 xmlns:f="sap.ui.layout.form">
 	<App>
 		<pages>
-			<Page showNavButton="true"
-				navButtonPress="onVoltar">
+			<Page showHeader="false">
 				<content>
-					<VBox class="sapUiSmallMargin">	
-						<f:SimpleForm id="SimpleFormChange480_Trial"
-						editable="true"
-						layout="ResponsiveGridLayout"
-						title="{view>/titulo}"
-						labelSpanXL="4"
-						labelSpanL="4"
-						labelSpanM="4"
-						labelSpanS="12"
-						adjustLabelSpan="false"
-						emptySpanXL="0"
-						emptySpanL="0"
-						emptySpanM="0"
-						emptySpanS="0"
-						columnsXL="3"
-						columnsL="2"
-						columnsM="2"
-						singleContainerFullSize="false">
-							<f:content>
-								<core:Title text="Dados cadastrais"/>
-								<Label text="Código" labelFor="codigo"/>
-								<Input id="codigo" value="{model>/Codigo}" required="true" editable="{view>/codigoEdit}"/>
-						
-								<Label text="Descrição" labelFor="descricao"/>
-								<Input id="descricao" value="{model>/Descricao}" required="true"/>
-								
-								<Label text="Texto Nota Fiscal" labelFor="notafiscal"/>
-								<Input id="notafiscal" value="{model>/TextoNotaFiscal}" required="true"/>
-								
-								<Label text="CFOP" labelFor="cfop"/>
-								<Input selectedKey="{model>/Cfop}"
-									textFormatMode="KeyValue"
-									showSuggestion="true"
-									showValueHelp="true"
-									valueHelpRequest="handleSearchCfop"
-									suggestionItems="{path: '/Cfops'}"
-									required="true"
-									id="cfop"> 
-									<core:ListItem key="{Codigo}" text="{Descricao}"/>
-								</Input>
-								
-								<core:Title text="PIS/COFINS"/>
-								<Label text="COFINS" labelFor="cstcofins" required="true"/>
-								<ComboBox selectedKey="{model>/CstCofins}"
-									items="{path: '/CstCofinss'}"
-									id="cstcofins"> 
-									<core:ListItem key="{Codigo}" text="{Descricao}"/>
-								</ComboBox>
-								
-								<Label text="Alíquota - COFINS" labelFor="aliquotacofins"/>
-								<Input id="aliquotacofins" 
-									value="{path: 'model>/AliquotaCofins', 
-										type: 'sap.ui.model.odata.type.Single',
-			                            formatOptions:{
-			                                decimals: 2,
-			                                decimalSeparator: ','
-			                            }}"/>
+					<VBox class="sapUiSmallMargin">
+						<Panel headerText="Natureza Operação">
+							<f:SimpleForm id="formNatureza"
+								editable="true"
+								layout="ResponsiveGridLayout"
+								labelSpanXL="4"
+								labelSpanL="4"
+								labelSpanM="4"
+								labelSpanS="12"
+								adjustLabelSpan="false"
+								emptySpanXL="0"
+								emptySpanL="0"
+								emptySpanM="0"
+								emptySpanS="0"
+								columnsXL="3"
+								columnsL="2"
+								columnsM="2"
+								singleContainerFullSize="false">
+								<f:content>
+									<core:Title text="{view>/titulo}"/> 
+									<Label text="Código" labelFor="codigo"/>
+									<Input id="codigo" value="{model>/Codigo}" required="true" editable="{view>/codigoEdit}"/>
+							
+									<Label text="Descrição" labelFor="descricao"/>
+									<Input id="descricao" value="{model>/Descricao}" required="true"/>
 									
-								<Label text="PIS" labelFor="cstpis" required="true"/>
-								<ComboBox selectedKey="{model>/CstPis}"
-									items="{path: '/CstPiss'}"
-									id="cstpis"> 
-									<core:ListItem key="{Codigo}" text="{Descricao}"/>
-								</ComboBox>
-								
-								<Label text="Alíquota - PIS" labelFor="aliquotapis"/>
-								<Input id="aliquotapis" 
-									value="{path: 'model>/AliquotaPis', 
+									<Label text="Texto Nota Fiscal" labelFor="notafiscal"/>
+									<Input id="notafiscal" value="{model>/TextoNotaFiscal}" required="true"/>
+									
+									<Label text="CFOP" labelFor="cfop"/>
+									<Input selectedKey="{model>/Cfop}"
+										textFormatMode="KeyValue"
+										showSuggestion="true"
+										showValueHelp="true"
+										valueHelpRequest="handleSearchCfop"
+										suggestionItems="{
+											path: '/Cfops',
+											events: {
+												dataReceived: '.cfopReceived'
+											}
+										}"
+										required="true"
+										id="cfop"> 
+										<core:ListItem key="{Codigo}" text="{Descricao}"/>
+									</Input>
+									
+									<core:Title text="PIS/COFINS"/>
+									<Label text="COFINS" labelFor="cstcofins" required="true"/>
+									<Input selectedKey="{model>/CstCofins}"
+										textFormatMode="KeyValue"
+										showSuggestion="true"
+										showValueHelp="true"
+										valueHelpRequest="handleSearchCstCofins"
+										suggestionItems="{
+											path: '/CstCofinss',
+											events: {
+												dataReceived: '.cstCofinsReceived'
+											}
+										}"
+										required="true"
+										id="cstcofins"> 
+										<core:ListItem key="{Codigo}" text="{Descricao}"/>
+									</Input>
+									
+									<Label text="Alíquota - COFINS" labelFor="aliquotacofins"/>
+									<Input id="aliquotacofins" 
+										value="{path: 'model>/AliquotaCofins', 
+											type: 'sap.ui.model.odata.type.Single',
+				                            formatOptions:{
+				                                decimals: 2,
+				                                decimalSeparator: ','
+				                            }}"/>
+										
+									<Label text="PIS" labelFor="cstpis" required="true"/>
+									<Input selectedKey="{model>/CstPis}"
+										textFormatMode="KeyValue"
+										showSuggestion="true"
+										showValueHelp="true"
+										valueHelpRequest="handleSearchCstPis"
+										suggestionItems="{
+											path: '/CstPiss',
+											events: {
+												dataReceived: '.cstPisReceived'
+											}
+										}"
+										required="true"
+										id="cstpis"> 
+										<core:ListItem key="{Codigo}" text="{Descricao}"/>
+									</Input>
+									
+									<Label text="Alíquota - PIS" labelFor="aliquotapis"/>
+									<Input id="aliquotapis" 
+										value="{path: 'model>/AliquotaPis', 
+											type: 'sap.ui.model.odata.type.Single',
+				                            formatOptions:{
+				                                decimals: 2,
+				                                decimalSeparator: ','
+				                            }}"/>
+									
+									<core:Title text="ICMS"/>
+									<Label text="ICMS" labelFor="csticms" required="true"/>
+									<Input selectedKey="{model>/CstIcms}"
+										textFormatMode="KeyValue"
+										showSuggestion="true"
+										showValueHelp="true"
+										valueHelpRequest="handleSearchCstIcms"
+										suggestionItems="{
+											path: '/CstIcmss',
+											events: {
+												dataReceived: '.cstIcmsReceived'
+											}
+										}"
+										required="true"
+										id="csticms"> 
+										<core:ListItem key="{Codigo}" text="{Descricao}"/>
+									</Input>
+									
+									<Label text="Alíquota - ICMS" labelFor="aliquotaicms"/>
+									<Input id="aliquotaicms" 
+										value="{
+										path: 'model>/AliquotaIcms',
 										type: 'sap.ui.model.odata.type.Single',
-			                            formatOptions:{
-			                                decimals: 2,
-			                                decimalSeparator: ','
-			                            }}"/>
-								
-								<core:Title text="ICMS"/>
-								<Label text="ICMS" labelFor="csticms" required="true"/>
-								<ComboBox selectedKey="{model>/CstIcms}"
-									items="{path: '/CstIcmss'}"
-									id="csticms"> 
-									<core:ListItem key="{Codigo}" text="{Descricao}"/>
-								</ComboBox>
-								
-								<Label text="Alíquota - ICMS" labelFor="aliquotaicms"/>
-								<Input id="aliquotaicms" 
-									value="{
-									path: 'model>/AliquotaIcms',
-									type: 'sap.ui.model.odata.type.Single',
-			                            formatOptions:{
-			                                decimals: 2,
-			                                decimalSeparator: ','
-			                            }}"/>
-								
-								<Label text="Diferimento - ICMS" labelFor="diferimento"/>
-								<Input id="diferimento" 
-									value="{path: 'model>/PercentualDiferimentoIcms',
+				                            formatOptions:{
+				                                decimals: 2,
+				                                decimalSeparator: ','
+				                            }}"/>
+									
+									<Label text="Diferimento - ICMS" labelFor="diferimento"/>
+									<Input id="diferimento" 
+										value="{path: 'model>/PercentualDiferimentoIcms',
+											type: 'sap.ui.model.odata.type.Single',
+				                            formatOptions:{
+				                                decimals: 2,
+				                                decimalSeparator: ','
+				                            }}"/>
+									
+									<Label text="Redução - Base de cálculo" labelFor="reducaobc"/>
+									<Input id="reducaobc" 
+										value="{path: 'model>/PercentualReducaoBC',
 										type: 'sap.ui.model.odata.type.Single',
-			                            formatOptions:{
-			                                decimals: 2,
-			                                decimalSeparator: ','
-			                            }}"/>
-								
-								<Label text="Redução - Base de cálculo" labelFor="reducaobc"/>
-								<Input id="reducaobc" 
-									value="{path: 'model>/PercentualReducaoBC',
-									type: 'sap.ui.model.odata.type.Single',
-			                            formatOptions:{
-			                                decimals: 2,
-			                                decimalSeparator: ','
-			                            }}"/>
-								
-								<core:Title text="IPI"/>
-								<Label text="IPI" labelFor="cstipi" required="true"/>
-								<ComboBox selectedKey="{model>/CstIpi}"
-									items="{path: '/CstIpis'}"
-									id="cstipi"> 
-									<core:ListItem key="{Codigo}" text="{Descricao}"/>
-								</ComboBox>
-								
-								<Label text="Alíquota - IPI" labelFor="aliquotaipi"/>
-								<Input id="aliquotaipi" 
-									value="{
-									path: 'model>/AliquotaIpi',
-									type: 'sap.ui.model.odata.type.Single',
-			                            formatOptions:{
-			                                decimals: 2,
-			                                decimalSeparator: ','
-			                            }}"/>
-								
-								<core:Title text="Ações"/>
-								<Label text="Gera duplicata" labelFor="geraduplicata"/>
-								<CheckBox selected="{model>/GeraDuplicata}"/>
-								
-								<Label text="Movimenta estoque" labelFor="movestoque"/>
-								<CheckBox selected="{model>/MovimentaEstoque}"/>
-							</f:content>
-						</f:SimpleForm>
+				                            formatOptions:{
+				                                decimals: 2,
+				                                decimalSeparator: ','
+				                            }}"/>
+									
+									<core:Title text="IPI"/>
+									<Label text="IPI" labelFor="cstipi" required="true"/>
+									<Input selectedKey="{model>/CstIpi}"
+										textFormatMode="KeyValue"
+										showSuggestion="true"
+										showValueHelp="true"
+										valueHelpRequest="handleSearchCstIpi"
+										suggestionItems="{
+											path: '/CstIpis',
+											events: {
+												dataReceived: '.cstIpiReceived'
+											}
+										}"
+										required="true"
+										id="cstipi"> 
+										<core:ListItem key="{Codigo}" text="{Descricao}"/>
+									</Input>
+									
+									<Label text="Alíquota - IPI" labelFor="aliquotaipi"/>
+									<Input id="aliquotaipi" 
+										value="{
+										path: 'model>/AliquotaIpi',
+										type: 'sap.ui.model.odata.type.Single',
+				                            formatOptions:{
+				                                decimals: 2,
+				                                decimalSeparator: ','
+				                            }}"/>
+									
+									<core:Title text="Ações"/>
+									<Label text="Gera duplicata" labelFor="geraduplicata"/>
+									<CheckBox selected="{model>/GeraDuplicata}"/>
+									
+									<Label text="Movimenta estoque" labelFor="movestoque"/>
+									<CheckBox selected="{model>/MovimentaEstoque}"/>
+								</f:content>
+							</f:SimpleForm>
+						</Panel>
 					</VBox>
 				</content>
 				<footer>
 					<Toolbar>
 						<ToolbarSpacer/>
-						<Button id="salvar" text="Salvar" press="onSalvar" class="sapUiSmallMarginEnd"/>
+						<Button icon="sap-icon://save" id="salvar" text="Salvar" press="onSalvar"/>
+						<Button icon="sap-icon://reset" id="voltar" text="Cancelar" press="onVoltar"/>
 					</Toolbar>
 				</footer>
 			</Page>
