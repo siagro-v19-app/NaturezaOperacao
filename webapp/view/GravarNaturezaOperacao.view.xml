@@ -1,15 +1,15 @@
 <mvc:View xmlns:core="sap.ui.core"
-xmlns:mvc="sap.ui.core.mvc"
-xmlns="sap.m"
-controllerName="br.com.idxtecNaturezaOperacao.controller.GravarNaturezaOperacao"
-xmlns:html="http://www.w3.org/1999/xhtml"
-xmlns:f="sap.ui.layout.form">
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	controllerName="br.com.idxtecNaturezaOperacao.controller.GravarNaturezaOperacao"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:f="sap.ui.layout.form">
 	<App>
 		<pages>
 			<Page showHeader="false">
 				<content>
 					<VBox class="sapUiSmallMargin">
-						<Panel headerText="Natureza Operação">
+						<Panel headerText="{view>/titulo}">
 							<f:SimpleForm id="formNatureza"
 								editable="true"
 								layout="ResponsiveGridLayout"
@@ -27,7 +27,7 @@ xmlns:f="sap.ui.layout.form">
 								columnsM="2"
 								singleContainerFullSize="false">
 								<f:content>
-									<core:Title text="{view>/titulo}"/> 
+									<core:Title text="Dados cadastrais"/> 
 									<Label text="Código" labelFor="codigo"/>
 									<Input id="codigo" value="{model>/Codigo}" required="true" editable="{view>/codigoEdit}"/>
 							
@@ -195,8 +195,8 @@ xmlns:f="sap.ui.layout.form">
 				<footer>
 					<Toolbar>
 						<ToolbarSpacer/>
-						<Button icon="sap-icon://save" id="salvar" text="Salvar" press="onSalvar"/>
-						<Button icon="sap-icon://reset" id="voltar" text="Cancelar" press="onVoltar"/>
+						<Button id="salvar" text="Salvar" press="onSalvar" type="Accept"/>
+						<Button id="voltar" text="Cancelar" press="onVoltar" type="Reject"/>
 					</Toolbar>
 				</footer>
 			</Page>
