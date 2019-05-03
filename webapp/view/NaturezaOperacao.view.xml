@@ -25,7 +25,7 @@
 							<Toolbar>
 								<Title text="Lista de Naturezas"/>
 								<ToolbarSpacer/>
-								<SearchField placeholder="Pesquisar natureza..." width="30%" search="filtraNatureza"/>
+								<SearchField placeholder="Pesquisar descrição..." width="30%" search="filtraNatureza"/>
 							</Toolbar>
 						</t:toolbar>
 						<t:columns>

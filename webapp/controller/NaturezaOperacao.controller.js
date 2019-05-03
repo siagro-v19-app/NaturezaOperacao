@@ -15,14 +15,16 @@ sap.ui.define([
 			this.getOwnerComponent().setModel(oParamModel, "parametros"); 
 			this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
 			
-			this.getModel().attachMetadataLoaded(function(){
-				var oFilter = new Filter("Empresa", FilterOperator.EQ, Session.get("EMPRESA_ID"));
-				var oView = this.getView();
-				var oTable = oView.byId("tableNatOperacao");
-				var oColumn = oView.byId("columnDescricao");
+			var oFilter = new Filter("Empresa", FilterOperator.EQ, Session.get("EMPRESA_ID"));
+			var oView = this.getView();
+			var oTable = oView.byId("tableNatOperacao");
 				
-				oTable.sort(oColumn);
-				oView.byId("tableNatOperacao").getBinding("rows").filter(oFilter, "Application");
+			oTable.bindRows({
+				path: '/NaturezaOperacaos',
+				sorter: {
+					path: 'Descricao'
+				},
+				filters: oFilter
 			});
 		},
 		
